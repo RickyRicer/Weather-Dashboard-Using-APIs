@@ -51,3 +51,16 @@
     --bs-body-color: #212529;
     --bs-body-bg: #fff;
   }
+
+  html, body, .container-fluid, .content-row {
+      height: 100%;
+  }
+
+  .city-btn:hover {
+    background-color: white;
+    cursor: pointer;
+  }
+
+  .card {
+    background-color: #6c757d;
+  }

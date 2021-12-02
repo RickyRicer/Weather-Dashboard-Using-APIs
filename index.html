@@ -24,9 +24,25 @@
               <div class="col-12 col-md-3 bg-light pt-3">
                 <h4>Search Cities:</h4>
                 <form id="target">
-                  <input type="text" class="form-control" id="city-input" placeholder="Search"></input>
+                  <input type="text" class="form-control" id="city-input" placeholder="Enter City Here"></input>
                   <input type="submit" class="btn btn-primary" id="city-submit" style="width: 100%;"></input>
                 </form>
+          </div>
+        </div>
+          <div class="card">
+            <ul class ="list-group list-group-flush" id="search-history"></ul>
+              <button id="clear-history" class="btn btn-sm btn-secondary hide">Clear History</button>
+          </div>
+        <div id="weather-content" class="col-12 col-md-9 hide">
+          <div class="row">
+            <div class="col-12">
+              <div class="city-info border rounded my-3 px-3 py-3">
+                <h2 id="current-city">
+                  "Weather Information "
+                  <small class="text-muted" id="current-date"></small>
+                </h2>
+              </div>
+            </div>
           </div>
         </div>
         
