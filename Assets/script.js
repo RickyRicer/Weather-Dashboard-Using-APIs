@@ -35,7 +35,11 @@ let forecastWeather = [];
 let forecastLength = 5;
 
 let searchHistory = JSON.parse(localStorage.getItem("searchHistory") || "[]");
+<<<<<<< HEAD
 
+=======
+// dynamically add all items from search history to the screen
+>>>>>>> b28f9138edd211e2835b8b28805e391fc9c357e5
 for (var i = 0; i < searchHistory.length; i++) {
     var searchHistoryItem = $('<li>')
         .text(searchHistory[i])
@@ -43,8 +47,12 @@ for (var i = 0; i < searchHistory.length; i++) {
     searchHistoryEl.append(searchHistoryItem);
 }
 
+<<<<<<< HEAD
 // cityFormEl.submit((event) => {
    function searchHandler(){      
+=======
+cityFormEl.submit((event) => {
+>>>>>>> b28f9138edd211e2835b8b28805e391fc9c357e5
     let userCity = '';
     event.preventDefault();
     if ($(cityInputEl).val() !== '') {
@@ -165,11 +173,14 @@ const loadCurrentWeather = () => {
         .text(`Humidity: ${currentCity.humidity}%`)
     let uvi = $('<p>')
         .text(`UV Index: ${currentCity.uvi}`)
+<<<<<<< HEAD
     console.log('currentCity', currentCity);
     document.getElementById('temp').textContent = 'Temperature: ' + currentCity.temp;
     document.getElementById('wind').textContent = 'Wind Speed: ' + currentCity.wind;
     document.getElementById('current-humidity').textContent = 'Humidity: ' + currentCity.humidity;
     document.getElementById('uvi').textContent = 'UV Index: ' + currentCity.uvi;
+=======
+>>>>>>> b28f9138edd211e2835b8b28805e391fc9c357e5
 
     currentWeatherEl.append(date)
         .append(icon)
@@ -177,6 +188,7 @@ const loadCurrentWeather = () => {
         .append(wind)
         .append(humi)
         .append(uvi);
+<<<<<<< HEAD
 }
 
 const loadFiveDayWeather = () => {
@@ -206,3 +218,32 @@ const loadFiveDayWeather = () => {
 }
 
 });
+=======
+}
+
+const loadFiveDayWeather = () => {
+
+    for (var i = 0; i < forecastLength; i++) {
+        let currentCard = $(`#card-${i}`);
+        currentCard.children(".card-header").text('');
+        currentCard.children(".card-body").empty();
+
+        let date = $('<h3>')
+            .text(forecastWeather[i].date);
+        let icon = $('<img>')
+            .attr("src", `https://openweathermap.org/img/wn/${forecastWeather[i].icon}@2x.png`);
+        let temp = $('<p>')
+            .text(`Temp: ${forecastWeather[i].temp}°F`);
+        let wind = $('<p>')
+            .text(`Wind: ${forecastWeather[i].wind} MPH`);
+        let humi = $('<p>')
+            .text(`Humidity: ${forecastWeather[i].humi}%`);
+
+        currentCard.children(".card-header").append(date);
+        currentCard.children(".card-body").append(icon)
+            .append(temp)
+            .append(wind)
+            .append(humi);
+    }
+}
+>>>>>>> b28f9138edd211e2835b8b28805e391fc9c357e5
