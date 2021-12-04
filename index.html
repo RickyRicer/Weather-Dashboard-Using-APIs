@@ -21,31 +21,32 @@
                <h4>Search Cities:</h4>
                <form id="target">
                   <input type="text" class="form-control" id="city-input" placeholder="Enter City Here"></input>
-                  <input type="submit" class="btn btn-primary" id="city-submit" style="width: 100%;"></input>
+                  <button type="submit" class="btn btn-primary" id="city-submit" style="width: 100%;" value="Search">Search</button>
                </form>
-            </div>
-         </div>
          <div class="card">
             <ul class ="list-group list-group-flush" id="search-history"></ul>
-            <button id="clear-history" class="btn btn-sm btn-secondary hide">Clear History</button>
+            <button id="clear-history" class="btn btn-sm btn-secondary">Clear History</button>
          </div>
-         <div id="weather-content" class="col-12 col-md-9 hide">
+         </div>
+         <div id="weather-content" class="col-12 col-md-9">
             <div class="row">
                <div class="col-12">
-                  <div class="city-info border rounded my-3 px-3 py-3 hide">
+                  <div class="city-info border rounded my-3 px-3 py-3">
                      <h2 id="current-city">
-                        "Weather Information "
+                           Weather Information
                         <small class="text-muted" id="current-date"></small>
-                        <p class="mb-0">
-                           "Temperature: "
+                        <p class="mb-0" id="temp">
+                           Temperature: 
                            <span id="current-temp"></span>
                         </p>
-                        <p class="mb-0">
-                           "Wind: "
-                           <span id="current-humidity"></span>
+                        <p class="mb-0" id='wind'>
+                           Wind: 
+                        </p>
+                        <p id="current-humidity">
+                           Humidity:
                         </p>
                         <p class="mb-0">
-                           "UV Index: "
+                           UV Index:
                            <span id="uvi"></span>
                         </p>
                      </h2>
@@ -57,9 +58,21 @@
                 <h3>5-Day Weather Forecast</h3>
               </div>
             </div>
+            <div id="five-day-forecast" class="row">
+               <div class="col-2">
+                   <div class="card">
+                       <div class="card-body">
+                       <h5 class="card-title">Date</h5>
+                       <i class="fa fa-sun"></i>
+                       <p class="card-text">Temp: </p>
+                       <p class="card-text">Humidity: </p>
+            </div>
+               </div>
+            </div>
+         </div>
          </div>
       </div>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script src="Assets/script.js"></script>
    </body>
 </html>
