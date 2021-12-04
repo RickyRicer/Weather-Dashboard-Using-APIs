@@ -25,8 +25,11 @@ let currentCityLat = ``;
 let currentCityLon = ``;
 let currentCityName = ``;
 
+let forecastWeather = [];
+let forecastLength = 5;
+
 let searchHistory = JSON.parse(localStorage.getItem("searchHistory") || "[]");
-// For loop to run through search history
+// dynamically add all items from search history to the screen
 for (var i = 0; i < searchHistory.length; i++) {
     var searchHistoryItem = $('<li>')
         .text(searchHistory[i])
@@ -34,91 +37,155 @@ for (var i = 0; i < searchHistory.length; i++) {
     searchHistoryEl.append(searchHistoryItem);
 }
 
-// listen for a user clicking on a lock
-cityFormEl.submit((event) => {    
+cityFormEl.submit((event) => {
     let userCity = '';
     event.preventDefault();
     if ($(cityInputEl).val() !== '') {
         userCity = $(cityInputEl).val();
         storeSearchHistory(userCity);
-        queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${userCity}&units=imperial&appid=${APIKEY}`;
+        queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${userCity}&units=imperial&appid=${APIKEY}`;
         pullCityWeatherData();
     };
 });
 
 const pullCityWeatherData = () => {
+
+    forecastWeather = [];
+
     fetch(queryURL).then(response =>
         response.json().then(data => ({
             data: data,
             status: response.status
         })).then(res => {
             if (res.status === 200) {
+
                 console.log(`Status: ${res.status} OK`);
                 console.log(res.data);
+
                 // grab the required data from the response object
                 // since we need the coordinates for the OneCall api, extract them
                 currentCity.lat = res.data.coord.lat;
                 currentCity.lon = res.data.coord.lon;
                 currentCity.name = res.data.name;
+
                 queryURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${currentCity.lat}&lon=${currentCity.lon}&units=imperial&appid=${APIKEY}`;
                 pullCoordWeatherData();
+
             } else {
                 console.log(`An error occurred. Status: ${res.status}`);
             }
         }));
+
 }
+
 const pullCoordWeatherData = () => {
+
     fetch(queryURL).then(response =>
         response.json().then(data => ({
             data: data,
             status: response.status
         })).then(res => {
             if (res.status === 200) {
+
                 console.log(`Status: ${res.status} OK`);
                 console.log(res.data);
+
                 // grab the required data from the response object
-                currentCity.dt = res.data.current.dt;
+                currentCity.date = new Date(res.data.current.dt * 1000).toLocaleDateString('en-US');
                 currentCity.uvi = res.data.current.uvi;
                 currentCity.temp = res.data.current.temp;
                 currentCity.wind = res.data.current.wind_speed;
                 currentCity.humidity = res.data.current.humidity;
                 currentCity.icon = res.data.current.weather[0].icon;
+
                 loadCurrentWeather();
+
+                for (var i = 1; i < forecastLength + 1; i++) {
+                    // start with a fresh object each iteration
+                    let nextWeatherForcast = {};
+
+                    // take everything needed from the response and store it
+                    Object.assign(nextWeatherForcast, {
+                        date: new Date(res.data.daily[i].dt * 1000).toLocaleDateString('en-US', {
+                            month: 'numeric',
+                            day: 'numeric'
+                        }),
+                        icon: res.data.daily[i].weather[0].icon,
+                        temp: res.data.daily[i].temp.max,
+                        wind: res.data.daily[i].wind_speed,
+                        humi: res.data.daily[i].humidity,
+                    });
+
+                    // lastly, push that object to the array and repeat for all cards
+                    forecastWeather.push(nextWeatherForcast);
+                }
+
+                loadFiveDayWeather();
             } else {
                 console.log(`An error occurred. Status: ${res.status}`);
             }
         }));
+
 }
+
 const storeSearchHistory = (userSearchQuery) => {
+
     searchHistory.push(userSearchQuery);
+
     // set the local storage to include the new score
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
 }
+
 const loadCurrentWeather = () => {
 
-        let date = $('<h1>')
-            .text(`${currentCity.name}`)
-        var icon = $('<img>')
-            .attr("src", `http://openweathermap.org/img/wn/${currentCity.icon}@2x.png`);
-        $("#right-div").append(icon);
+    //clear any currently displayed data
+    let currentWeatherEl = $("#right-div");
+    currentWeatherEl.empty();
+
+    let date = $('<h1>')
+        .text(`${currentCity.name} (${currentCity.date})`)
+        .attr("style", "display: inline")
+    let icon = $('<img>')
+        .attr("src", `https://openweathermap.org/img/wn/${currentCity.icon}@2x.png`);
+    let temp = $('<p>')
+        .text(`Temp: ${currentCity.temp}°F`)
+    let wind = $('<p>')
+        .text(`Wind Speed: ${currentCity.wind} MPH`)
+    let humi = $('<p>')
+        .text(`Humidity: ${currentCity.humidity}%`)
+    let uvi = $('<p>')
+        .text(`UV Index: ${currentCity.uvi}`)
+
+    currentWeatherEl.append(date)
+        .append(icon)
+        .append(temp)
+        .append(wind)
+        .append(humi)
+        .append(uvi);
 }
-// // if there is no stored data for a user,
-// if (userSettings.length === 0) {
-//     // then load localStorage with a default array of placeholder data
-//     for (let i = 0; i < workingHours.length; i++) {
-//         userSettings[i] = {
-//             id: i,
-//             text: ''
-//         };
-//     }
-//     // and save that default array to localStorage
-//     localStorage.setItem("userSettings", JSON.stringify(userSettings));
-//     userSettings = JSON.parse(localStorage.getItem("userSettings"));
-// } else {
-//     // there are existing settings, so store them
-//     userSettings = JSON.parse(localStorage.getItem("userSettings"));
-//     // and display them in the textarea for each card
-//     for (let i = 0; i < userSettings.length; i++) {
-//         $(`[data-id=${userSettings[i].id}]`).children('.card-body').children('textarea').val(userSettings[i].text);
-//     }
-// }
+
+const loadFiveDayWeather = () => {
+
+    for (var i = 0; i < forecastLength; i++) {
+        let currentCard = $(`#card-${i}`);
+        currentCard.children(".card-header").text('');
+        currentCard.children(".card-body").empty();
+
+        let date = $('<h3>')
+            .text(forecastWeather[i].date);
+        let icon = $('<img>')
+            .attr("src", `https://openweathermap.org/img/wn/${forecastWeather[i].icon}@2x.png`);
+        let temp = $('<p>')
+            .text(`Temp: ${forecastWeather[i].temp}°F`);
+        let wind = $('<p>')
+            .text(`Wind: ${forecastWeather[i].wind} MPH`);
+        let humi = $('<p>')
+            .text(`Humidity: ${forecastWeather[i].humi}%`);
+
+        currentCard.children(".card-header").append(date);
+        currentCard.children(".card-body").append(icon)
+            .append(temp)
+            .append(wind)
+            .append(humi);
+    }
+}
