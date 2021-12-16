@@ -142,34 +142,53 @@ const storeSearchHistory = (userSearchQuery) => {
 
     searchHistory.push(userSearchQuery);
 
-    // set the local storage to include the new score
+    // set the local storage to include the new search
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
 }
 
 const loadCurrentWeather = () => {
 
-    //clear any currently displayed data
+    
     let currentWeatherEl = $("#right-div");
     currentWeatherEl.empty();
 
+    //UV Index Color Change
+    let uvIndexColor = 'green';
+
+    if(currentCity.uvi >= 8) {
+        uvIndexColor = 'darkpink';
+    } else if(currentCity.uvi >= 6) {
+        uvIndexColor = 'red';
+    } else if(currentCity.uvi >= 3) {
+        uvIndexColor = 'orange';
+    } else {
+        // Returns to default color
+    }
+
+    // Adding data to weather screen
     let date = $('<h1>')
         .text(`${currentCity.name} (${currentCity.date})`)
-        .attr("style", "display: inline")
+        .attr("style", "display: inline");
     let icon = $('<img>')
         .attr("src", `https://openweathermap.org/img/wn/${currentCity.icon}@2x.png`);
     let temp = $('<p>')
-        .text(`Temp: ${currentCity.temp}°F`)
+        .text(`Temp: ${currentCity.temp}°F`);
     let wind = $('<p>')
-        .text(`Wind Speed: ${currentCity.wind} MPH`)
+        .text(`Wind Speed: ${currentCity.wind} MPH`);
     let humi = $('<p>')
-        .text(`Humidity: ${currentCity.humidity}%`)
-    let uvi = $('<p>')
+        .text(`Humidity: ${currentCity.humidity}%`);
+    let uvi = $('<div><p></p></div>')
+        .attr('style', `background-color: ${uvIndexColor}; width: max-content; padding: 0 5px;`)
+        .find('p')
         .text(`UV Index: ${currentCity.uvi}`)
-    console.log('currentCity', currentCity);
-    document.getElementById('temp').textContent = 'Temperature: ' + currentCity.temp;
-    document.getElementById('wind').textContent = 'Wind Speed: ' + currentCity.wind;
-    document.getElementById('current-humidity').textContent = 'Humidity: ' + currentCity.humidity;
-    document.getElementById('uvi').textContent = 'UV Index: ' + currentCity.uvi;
+        .attr('style', 'color: white;')
+        .end()
+
+    // console.log('currentCity', currentCity);
+    // document.getElementById('temp').textContent = 'Temperature: ' + currentCity.temp;
+    // document.getElementById('wind').textContent = 'Wind Speed: ' + currentCity.wind;
+    // document.getElementById('current-humidity').textContent = 'Humidity: ' + currentCity.humidity;
+    // document.getElementById('uvi').textContent = ' ' + currentCity.uvi;
 
     currentWeatherEl.append(date)
         .append(icon)

@@ -10,15 +10,17 @@
       <title>Weather Dashboard</title>
    </head>
    <body>
+      <!-- Main Content Container -->
       <div class="container-fluid">
          <div class="row navbar navbar-dark bg-dark">
             <div class="col-12 text-center">
                <h1 class ="navbar-brand pt-2">Weather Dashboard</h1>
             </div>
          </div>
+         <!-- Search Column -->
          <div class="row content-row">
             <div class="col-12 col-md-3 bg-light pt-3">
-               <h4>Search Cities:</h4>
+               <h2>Search Cities:</h4>
                <form id="target">
                   <input type="text" class="form-control" id="city-input" placeholder="Enter City Here"></input>
                   <button type="submit" class="btn btn-primary" id="city-submit" style="width: 100%;" value="Search">Search</button>
@@ -28,31 +30,16 @@
             <button id="clear-history" class="btn btn-sm btn-secondary">Clear History</button>
          </div>
          </div>
+         <!-- Weather Information-->
          <div id="weather-content" class="col-12 col-md-9">
             <div class="row">
                <div class="col-12">
-                  <div class="city-info border rounded my-3 px-3 py-3">
-                     <h2 id="current-city">
-                           Weather Information
-                        <small class="text-muted" id="current-date"></small>
-                        <p class="mb-0" id="temp">
-                           Temperature: 
-                           <span id="current-temp"></span>
-                        </p>
-                        <p class="mb-0" id='wind'>
-                           Wind: 
-                        </p>
-                        <p id="current-humidity">
-                           Humidity:
-                        </p>
-                        <p class="mb-0">
-                           UV Index:
-                           <span id="uvi"></span>
-                        </p>
-                     </h2>
+                  <div class="city-info border rounded my-3 px-3 py-3" id='right-div'>
+                     
                   </div>
                </div>
             </div>
+            <!-- 5-Day Weather Forecast -->
             <div class="row">
               <div class="col-12">
                 <h3>5-Day Weather Forecast</h3>
@@ -95,11 +82,11 @@
                     </div>
                 </div>
             </div>
-            <!--Need to figure out why this isn't adding search history immediately-->
         </div>
          </div>
          </div>
       </div>
+      <!--End Main Content -->
       <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script src="Assets/script.js"></script>
    </body>
