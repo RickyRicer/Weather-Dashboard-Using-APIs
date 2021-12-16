@@ -1,7 +1,7 @@
 
 # Weather Dashboard
 
-Welcome to my Weather Dashboard! Here you can search for the current and 5-Day weather forecast for any city! We utilized the OpenWeather API to bring you all the information you need when planning your next trip, or just to see how the local weather is! 
+Welcome to your Weather Dashboard! Here you can search for the current and 5-Day weather forecast for any city! We utilized the OpenWeather API to bring you all the information you need when planning your next trip, or just to see how the local weather is! 
 
 ## Demo
 
