@@ -5,7 +5,7 @@ Welcome to your Weather Dashboard! Here you can search for the current and 5-Day
 
 ## Demo
 
-Click [here](https://rickyricer.github.io/Weather-Dashboard-Using-APIs/) to go to a working demo of the dayplanner 
+Click [here](https://rickyricer.github.io/Weather-Dashboard-Using-APIs/) to go to a working demo of the dashboard! 
 ## Screenshots
 
 ![App Screenshot](https://raw.githubusercontent.com/RickyRicer/Weather-Dashboard-Using-APIs/main/Assets/screengrab.JPG)
