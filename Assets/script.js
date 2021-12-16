@@ -18,7 +18,7 @@ let queryURL = ``;
 let currentCity = {
     lat: 0,
     lon: 0,
-    name: "EnglandIsMyCity",
+    name: "AbuDhabi",
     dt: "0000000000",
     icon: "aaa",
     temp: 0,
@@ -183,12 +183,6 @@ const loadCurrentWeather = () => {
         .text(`UV Index: ${currentCity.uvi}`)
         .attr('style', 'color: white;')
         .end()
-
-    // console.log('currentCity', currentCity);
-    // document.getElementById('temp').textContent = 'Temperature: ' + currentCity.temp;
-    // document.getElementById('wind').textContent = 'Wind Speed: ' + currentCity.wind;
-    // document.getElementById('current-humidity').textContent = 'Humidity: ' + currentCity.humidity;
-    // document.getElementById('uvi').textContent = ' ' + currentCity.uvi;
 
     currentWeatherEl.append(date)
         .append(icon)
