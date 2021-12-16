@@ -163,7 +163,7 @@ const loadCurrentWeather = () => {
         uvIndexColor = 'orange';
     } else {
         // Returns to default color
-    }
+    };
 
     // Adding data to weather screen
     let date = $('<h1>')
