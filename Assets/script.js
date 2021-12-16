@@ -146,6 +146,15 @@ const storeSearchHistory = (userSearchQuery) => {
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
 }
 
+// function to clear high score
+
+function clearSearchHistory () {
+    localStorage.removeItem('searchHistory');
+    location.reload();
+}
+document.getElementById('clear-history').onclick = clearSearchHistory;
+
+
 const loadCurrentWeather = () => {
 
     
