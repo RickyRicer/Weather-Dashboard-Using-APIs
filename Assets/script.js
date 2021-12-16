@@ -149,8 +149,8 @@ const storeSearchHistory = (userSearchQuery) => {
 // function to clear high score
 
 function clearSearchHistory () {
-    localStorage.removeItem('searchHistory');
-    location.reload();
+    window.localStorage.removeItem('searchHistory');
+    window.location.reload();
 }
 document.getElementById('clear-history').onclick = clearSearchHistory;
 
